@@ -12,6 +12,30 @@ python3 scripts/protocol-artifacts.py check
 
 Swift tools 6.2, iOS 26.1 and macOS 15 minimums are unchanged. Use a Git URL and an explicit revision for SwiftPM consumers. No remote exists yet; local Git URLs work for verification. Nothing is published; see [SOURCE.md](SOURCE.md).
 
+## SonarQube Cloud
+
+GitHub Actions runs coverage-enabled Swift tests, converts SwiftPM's LLVM JSON to
+Sonar generic line coverage, then scans handwritten SDK code and waits for the
+quality gate. Fork PRs still run tests but skip authenticated analysis.
+
+Repository variables are `SONAR_ORGANIZATION=manuelselch` and
+`SONAR_PROJECT_KEY=ManuelSelch_pi-sdk-swift`. Add the repository Actions secret
+`SONAR_TOKEN`, import this repository into SonarQube Cloud, and disable automatic
+analysis in favor of CI analysis. Eligible runs fail explicitly if configuration
+is missing. Requiring the CI check for merges is a separate branch-protection setting.
+
+Reproduce coverage locally:
+
+```sh
+python3 -m unittest discover -s scripts/sonar -p 'test_*.py'
+swift test --enable-code-coverage
+python3 scripts/sonar/coverage_to_sonar.py "$(swift test --show-codecov-path)" coverage/sonar.xml
+```
+
+Generated contracts, experiments, tests and tooling are excluded from analysis;
+there is no explicit `sonar.sources` or `sonar.tests` override. Tests still
+contribute coverage for SDK implementation. Coverage reports are ignored by Git.
+
 ## Protocol authority
 
 `pi-sdk-typescript` owns the authoritative Zod protocol and generated artifacts. This repository contains an exact pinned snapshot, not a separate definition. `protocol/SOURCE.json` records the upstream Git revision and SHA-256 hashes. Swift tests verify snapshot hashes and exact bundled-schema/probe drift.
