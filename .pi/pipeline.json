@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "suites": {
+    "protocol": {
+      "command": [
+        "python3",
+        "scripts/protocol-artifacts.py",
+        "check"
+      ],
+      "cwd": ".",
+      "timeoutSeconds": 60,
+      "staleAfterMinutes": 30,
+      "auto": "after-agent"
+    },
+    "build": {
+      "command": [
+        "swift",
+        "build"
+      ],
+      "cwd": ".",
+      "timeoutSeconds": 300,
+      "staleAfterMinutes": 30,
+      "auto": "after-agent"
+    },
+    "test": {
+      "command": [
+        "swift",
+        "test"
+      ],
+      "cwd": ".",
+      "timeoutSeconds": 300,
+      "staleAfterMinutes": 30,
+      "auto": "after-agent"
+    }
+  }
+}
