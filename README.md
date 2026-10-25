@@ -68,8 +68,8 @@ and manual runs, separate from unit/probe tests. Missing prerequisites fail rath
 than skip. Normal `swift build` / `swift test` still need no Node or npm.
 The suite covers creation, streaming, Stop, disconnect retention, reattachment,
 explicit shutdown cleanup and unreachable endpoints; it does not establish full
-Swift parity or real-model conversation acceptance. Pi Chat's old harness remains
-temporarily until the separately approved cleanup slice.
+Swift parity or real-model conversation acceptance. Pi Chat no longer vendors a
+Swift SDK or runs a duplicate Swift harness; this repository owns that coverage.
 
 ## Swift session browsing and streaming subset (Pi Studio / Pi Pocket)
 
