@@ -4,3 +4,5 @@
 coverage/
 .scannerwork/
 __pycache__/
+node_modules/
+.artifacts/

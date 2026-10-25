@@ -52,7 +52,24 @@ Review and commit the resulting snapshot/manifest together. The script never dis
 
 ## Server integration ownership
 
-Real Pi Server loopback tests live in Pi Chat's `test/swift-integration` harness and run there against its server and this Git-pinned SDK. They are deliberately not silently skipped in this repository: they are a separate mandatory integration suite. SDK unit tests use injected transports; passing them alone is not proof of real-server or full Swift parity.
+This repository owns the separate [server integration suite](integration/README.md).
+It tests the SDK source in this checkout against the exact, lockfile-pinned npm
+`@manuelselch/pi-server@0.1.0`, using the server's public compiled loopback fixture
+and the real URLSession transport. The fixture uses a deterministic fake runtime:
+no credentials, live model calls, Pi Chat, sibling checkout or server sources.
+
+```sh
+npm ci --ignore-scripts --prefix integration
+npm test --prefix integration
+```
+
+CI runs this as an unconditional `server-integration` job on pushes, pull requests
+and manual runs, separate from unit/probe tests. Missing prerequisites fail rather
+than skip. Normal `swift build` / `swift test` still need no Node or npm.
+The suite covers creation, streaming, Stop, disconnect retention, reattachment,
+explicit shutdown cleanup and unreachable endpoints; it does not establish full
+Swift parity or real-model conversation acceptance. Pi Chat's old harness remains
+temporarily until the separately approved cleanup slice.
 
 ## Swift session browsing and streaming subset (Pi Studio / Pi Pocket)
 

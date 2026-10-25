@@ -3,6 +3,34 @@ on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
+  server-integration:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: integration/package-lock.json
+      - name: Select stable Xcode
+        run: sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
+      - name: Test integration prerequisites
+        run: node --test scripts/run-server-integration.test.mjs
+      - name: Install locked published server
+        run: npm ci --ignore-scripts --prefix integration
+      - name: Test local Swift SDK against published server
+        run: npm test --prefix integration
+      - name: Retain integration failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v6
+        with:
+          name: swift-server-integration-diagnostics
+          path: integration/.artifacts/
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 7
+
   swift:
     runs-on: macos-15
     timeout-minutes: 20
