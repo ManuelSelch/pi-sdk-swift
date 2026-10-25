@@ -1,5 +1,8 @@
 # Server integration — Slice 1 verification
 
+Historical S1 record. For current ownership after Chat cleanup and fresh independent
+suite results, see [S3 verification](S3-VERIFICATION.md).
+
 Verified locally on 2026-10-25 with Xcode/Swift 6.2.1. The new mandatory CI job is configured, not remotely executed by this task.
 
 ## Clean-source acceptance

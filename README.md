@@ -70,6 +70,8 @@ The suite covers creation, streaming, Stop, disconnect retention, reattachment,
 explicit shutdown cleanup and unreachable endpoints; it does not establish full
 Swift parity or real-model conversation acceptance. Pi Chat no longer vendors a
 Swift SDK or runs a duplicate Swift harness; this repository owns that coverage.
+See the [independent ownership verification](docs/server-integration/S3-VERIFICATION.md)
+for Node-free build/test evidence, package boundaries and version-specific results.
 
 ## Swift session browsing and streaming subset (Pi Studio / Pi Pocket)
 

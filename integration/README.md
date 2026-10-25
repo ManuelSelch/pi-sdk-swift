@@ -49,6 +49,14 @@ for inspection. CI uploads logs for seven days. The fixture's readiness record
 also identifies its temporary workspace. Local failed workspaces can be removed
 after inspection.
 
+The server repository owns fixture implementation and server/package regression
+checks. This repository owns Swift behavior, real-transport compatibility and the
+consumer driver, not a copied server implementation. Chat retains only web/Node
+application and installed-dependency checks, including additional plain-Node
+cleanup-file/symlink safety assertions; it has no Swift harness or bundle.
+See [S3 verification](../docs/server-integration/S3-VERIFICATION.md) for clean-source,
+Node-free unit/build and pinned-version integration results.
+
 Unit/probe tests remain in the root package and do not require npm. Both suites
 are required in CI; branch protection must separately require the relevant job.
 This compatibility suite is not full Swift parity or a real-model acceptance test.
